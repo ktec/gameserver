@@ -3,7 +3,7 @@ defmodule Gameserver.GameTest do
   alias Gameserver.Game
 
   setup do
-    {:ok, game} = Game.start_link
+    {:ok, game} = Game.start_link(%{}, [])
     {:ok, game: game}
   end
 

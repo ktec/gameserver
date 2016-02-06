@@ -7,8 +7,8 @@ defmodule Gameserver.Game do
   @doc """
   Starts the process
   """
-  def start_link() do
-    GenServer.start_link(__MODULE__, :ok, [])
+  def start_link(state, opts) do
+    GenServer.start_link(__MODULE__, state, opts)
   end
 
   # @doc """
@@ -29,8 +29,8 @@ defmodule Gameserver.Game do
 
   # Server (callbacks)
 
-  def init(:ok) do
-    {:ok, %{}}
+  def init(state) do
+    {:ok, state}
   end
 
   def handle_cast({:add_player, name}, state) do
