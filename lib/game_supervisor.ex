@@ -1,7 +1,6 @@
 defmodule Gameserver.GameSupervisor do
   require Logger
   use Supervisor
-  alias Gameserver.Game
 
   def start_link do
     Supervisor.start_link(__MODULE__, [])
@@ -9,7 +8,7 @@ defmodule Gameserver.GameSupervisor do
 
   def init([]) do
     children = [
-      worker(Game, [[],[:hello]])
+      worker(Gameserver.Game, [%{}, [:hello]])
     ]
 
     supervise(children, strategy: :one_for_one)
