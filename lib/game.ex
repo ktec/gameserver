@@ -35,6 +35,6 @@ defmodule Gameserver.Game do
 
   def handle_cast({:add_player, name}, state) do
     # noop
-    {GenServer.call(:sup_:noreply, state}
+    {:noreply, state}
   end
 end
