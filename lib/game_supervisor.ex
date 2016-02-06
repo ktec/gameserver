@@ -9,7 +9,7 @@ defmodule Gameserver.GameSupervisor do
 
   def init([]) do
     children = [
-      worker(Game, [[:hello]])
+      worker(Game, [[],[:hello]])
     ]
 
     supervise(children, strategy: :one_for_one)
