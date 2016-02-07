@@ -3,15 +3,19 @@ defmodule Gameserver.GameSupervisor do
   use Supervisor
 
   def start_link do
-    Supervisor.start_link(__MODULE__, [])
+    Supervisor.start_link(__MODULE__, [], name: __MODULE__)
   end
 
   def init([]) do
     children = [
-      worker(Gameserver.Game, [%{}, [:hello]])
+      worker(Gameserver.Game, [], restart: :transient)
     ]
 
-    supervise(children, strategy: :one_for_one)
+    supervise(children, strategy: :simple_one_for_one)
+  end
+
+  def start_game do
+    Supervisor.start_child(__MODULE__, [[],[]])
   end
 
   # def start_link do

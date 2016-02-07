@@ -35,6 +35,6 @@ defmodule Gameserver.Game do
 
   def handle_cast({:add_player, name}, state) do
     # noop
-    {:noreply, state}
+    {:noreply, [name | state]}
   end
 end
