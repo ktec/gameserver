@@ -9,7 +9,9 @@ defmodule Gameserver do
     children = [
       # Define workers and child supervisors to be supervised
       # worker(Gameserver.Worker, [arg1, arg2, arg3]),
-      worker(Gameserver.GameSupervisor, [])
+      worker(Gameserver.GameSupervisor, []),
+      # worker(Gameserver.TeamSupervisor, []),
+      # worker(Gameserver.PlayerSupervisor, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

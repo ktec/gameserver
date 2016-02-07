@@ -7,18 +7,9 @@ defmodule Gameserver.Game do
   @doc """
   Starts the process
   """
-  def start_link(state, opts) do
+  def start_link(state, opts \\ []) do
     GenServer.start_link(__MODULE__, state, opts)
   end
-
-  # @doc """
-  # Adds a player to the game
-  #
-  # Returns `{:ok, pid}` if the game exists, `:error` otherwise.
-  # """
-  # def lookup_player(pid, name) do
-  #   GenServer.call(pid, {:lookup_player, name})
-  # end
 
   @doc """
   Ensures there is a player associated with the given `name` in `server`.
@@ -27,14 +18,35 @@ defmodule Gameserver.Game do
     GenServer.cast(pid, {:add_player, name})
   end
 
+  @doc """
+  Adds a new team to the game.
+  """
+  def add_team(pid, name) do
+    GenServer.cast(pid, {:add_team, name})
+  end
+
   # Server (callbacks)
 
   def init(state) do
+
+    import Supervisor.Spec, warn: false
+
+    children = [
+      supervisor(Gameserver.TeamSupervisor,
+      [[],[]]),
+    ]
+    {:ok, pid} = Supervisor.start_link(children, strategy: :one_for_one)
+
     {:ok, state}
   end
 
   def handle_cast({:add_player, name}, state) do
     # noop
+    {:noreply, [name | state]}
+  end
+
+  def handle_cast({:add_team, name}, state) do
+    # GenServer.call(:sup_team, [:add_team, name])
     {:noreply, [name | state]}
   end
 end
